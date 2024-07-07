@@ -238,6 +238,38 @@ fn create_user(payload: UserPayload) -> Result<User, String> {
     Ok(user)
 }
 
+// Function to fetch a user by id
+#[ic_cdk::query]
+fn get_user_by_id(user_id: u64) -> Result<User, Error> {
+    USERS_STORAGE.with(|storage| match storage.borrow().get(&user_id) {
+        Some(user) => Ok(user.clone()),
+        None => Err(Error::NotFound {
+            msg: "User not found.".to_string(),
+        }),
+    })
+}
+
+// Function to fetch users by role
+#[ic_cdk::query]
+fn get_users_by_role(role: UserRole) -> Result<Vec<User>, Error> {
+    let users = USERS_STORAGE.with(|storage| {
+        storage
+            .borrow()
+            .iter()
+            .filter(|(_, user)| user.role == role)
+            .map(|(_, user)| user.clone())
+            .collect::<Vec<_>>()
+    });
+
+    if users.is_empty() {
+        Err(Error::NotFound {
+            msg: "No users found with the specified role.".to_string(),
+        })
+    } else {
+        Ok(users)
+    }
+}
+
 // Function to create a new pharmaceutical
 #[ic_cdk::update]
 fn create_pharmaceutical(payload: PharmaceuticalPayload) -> Result<Pharmaceutical, String> {
@@ -443,7 +475,7 @@ fn get_all_rewards() -> Result<Vec<Reward>, String> {
             .map(|(_, r)| r.clone())
             .collect::<Vec<_>>()
     });
-    
+
     if rewards.is_empty() {
         Err("No rewards found.".to_string())
     } else {

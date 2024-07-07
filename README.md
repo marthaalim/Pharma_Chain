@@ -1,33 +1,30 @@
-# Book Swap Platform
+# Pharma_Chain
 
-This project is a decentralized platform built on the Internet Computer, aiming to facilitate the exchange of books among users. It leverages the power of the blockchain to ensure transparency and reliability in the swapping process.
+This project is a decentralized platform built on the Internet Computer Protocol (ICP) to track pharmaceutical products through the supply chain. It ensures transparency, accountability, and rewards participants for their involvement.
 
 ## Key Features
 
 1. **User Management**
-   - **Create User Profile:** Allows the creation of new user profiles with validation for input fields.
-   - **Get User Profile:** Retrieves the profile of a user by their unique ID.
-   - **Update User Profile:** Updates the existing user profile with new information.
-   - **Get All Users:** Retrieves all registered user profiles.
+   - **Create User:** Allows the creation of new user profiles with validation for input fields.
+   - **Get User by ID:** Retrieves the profile of a user by their unique ID.
+   - **Get Users by Role:** Retrieves all users based on their role (Admin, Manufacturer, Distributor, Viewer).
 
-2. **Book Management**
-   - **Create Book:** Allows a user to register a new book for swapping.
-   - **Get Book:** Retrieves the details of a specific book by its ID.
-   - **Get Books by User ID:** Lists all books registered by a specific user.
-   - **Get Books by Title:** Retrieves books filtered by their title.
+2. **Pharmaceutical Management**
+   - **Create Pharmaceutical:** Allows an admin to register a new pharmaceutical product.
+   - **Get Pharmaceutical History:** Retrieves the event history of a specific pharmaceutical product.
+   - **Get All Pharmaceuticals:** Retrieves all registered pharmaceutical products.
 
-3. **Swap Management**
-   - **Create Swap Request:** Initiates a swap request for a book.
-   - **Get Swap Requests by User ID:** Retrieves all swap requests initiated by a specific user.
-   - **Get Swap Request Details:** Provides details of a specific swap request.
+3. **Supply Chain Event Management**
+   - **Create Supply Chain Event:** Records a new event in the supply chain process.
+   - **Get All Supply Chain Events:** Retrieves all recorded supply chain events.
 
-4. **Feedback Management**
-   - **Create Feedback:** Allows users to leave feedback on a completed swap.
-   - **Get Feedbacks by User ID:** Retrieves all feedback associated with a specific user.
+4. **Reward Management**
+   - **Create Reward:** Assigns reward points to participants involved in supply chain events.
+   - **Get All Rewards:** Retrieves all rewards assigned to participants.
 
 5. **Error Handling**
-   - **Not Found:** Returns an error if a requested resource (user, book, swap request) is not found.
-   - **Invalid Input:** Handles errors related to invalid email, phone number, or missing required fields.
+   - **Not Found:** Returns an error if a requested resource (user, pharmaceutical, event) is not found.
+   - **Unauthorized:** Handles errors related to unauthorized actions.
 
 
 ## Requirements
