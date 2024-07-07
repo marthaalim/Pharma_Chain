@@ -1,0 +1,68 @@
+type Pharmaceutical = record {
+  id : nat64;
+  batch_number : text;
+  manufacturer : text;
+  name : text;
+  user_id : nat64;
+  expiry_date : nat64;
+};
+type PharmaceuticalPayload = record {
+  batch_number : text;
+  manufacturer : text;
+  name : text;
+  user_id : nat64;
+  expiry_date : nat64;
+};
+type Result = variant { Ok : Pharmaceutical; Err : text };
+type Result_1 = variant { Ok : Reward; Err : text };
+type Result_2 = variant { Ok : SupplyChainEvent; Err : text };
+type Result_3 = variant { Ok : User; Err : text };
+type Result_4 = variant { Ok : vec Pharmaceutical; Err : text };
+type Result_5 = variant { Ok : vec Reward; Err : text };
+type Result_6 = variant { Ok : vec SupplyChainEvent; Err : text };
+type Reward = record {
+  id : nat64;
+  participant : text;
+  reward_type : RewardType;
+  points : nat32;
+};
+type RewardPayload = record {
+  participant : text;
+  reward_type : RewardType;
+  points : nat32;
+};
+type RewardType = variant { SupplyChainEvent; Other };
+type SupplyChainEvent = record {
+  id : nat64;
+  date : nat64;
+  participant : text;
+  pharmaceutical_id : nat64;
+  location : text;
+  event_type : SupplyChainEventType;
+};
+type SupplyChainEventPayload = record {
+  participant : text;
+  pharmaceutical_id : nat64;
+  location : text;
+  event_type : SupplyChainEventType;
+};
+type SupplyChainEventType = variant {
+  Storage;
+  Production;
+  Delivery;
+  Packaging;
+  Transportation;
+};
+type User = record { id : nat64; username : text; role : UserRole };
+type UserPayload = record { username : text; role : UserRole };
+type UserRole = variant { Distributor; Viewer; Admin; Manufacturer };
+service : {
+  create_pharmaceutical : (PharmaceuticalPayload) -> (Result);
+  create_reward : (RewardPayload) -> (Result_1);
+  create_supply_chain_event : (SupplyChainEventPayload) -> (Result_2);
+  create_user : (UserPayload) -> (Result_3);
+  get_all_pharmaceuticals : () -> (Result_4) query;
+  get_all_rewards : () -> (Result_5) query;
+  get_all_supply_chain_events : () -> (Result_6) query;
+  get_pharmaceutical_history : (nat64) -> (Result_6) query;
+}
