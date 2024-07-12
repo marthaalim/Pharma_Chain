@@ -2,6 +2,7 @@ type Error = variant {
   NotFound : record { msg : text };
   UnAuthorized : record { msg : text };
 };
+
 type Pharmaceutical = record {
   id : nat64;
   batch_number : text;
@@ -10,6 +11,7 @@ type Pharmaceutical = record {
   user_id : nat64;
   expiry_date : nat64;
 };
+
 type PharmaceuticalPayload = record {
   batch_number : text;
   manufacturer : text;
@@ -17,6 +19,7 @@ type PharmaceuticalPayload = record {
   user_id : nat64;
   expiry_date : nat64;
 };
+
 type Result = variant { Ok : Pharmaceutical; Err : text };
 type Result_1 = variant { Ok : Reward; Err : text };
 type Result_2 = variant { Ok : SupplyChainEvent; Err : text };
@@ -26,18 +29,22 @@ type Result_5 = variant { Ok : vec Reward; Err : text };
 type Result_6 = variant { Ok : vec SupplyChainEvent; Err : text };
 type Result_7 = variant { Ok : User; Err : Error };
 type Result_8 = variant { Ok : vec User; Err : Error };
+
 type Reward = record {
   id : nat64;
   participant : text;
   reward_type : RewardType;
   points : nat32;
 };
+
 type RewardPayload = record {
   participant : text;
   reward_type : RewardType;
   points : nat32;
 };
+
 type RewardType = variant { SupplyChainEvent; Other };
+
 type SupplyChainEvent = record {
   id : nat64;
   date : nat64;
@@ -46,12 +53,14 @@ type SupplyChainEvent = record {
   location : text;
   event_type : SupplyChainEventType;
 };
+
 type SupplyChainEventPayload = record {
   participant : text;
   pharmaceutical_id : nat64;
   location : text;
   event_type : SupplyChainEventType;
 };
+
 type SupplyChainEventType = variant {
   Storage;
   Production;
@@ -59,9 +68,11 @@ type SupplyChainEventType = variant {
   Packaging;
   Transportation;
 };
+
 type User = record { id : nat64; username : text; role : UserRole };
 type UserPayload = record { username : text; role : UserRole };
 type UserRole = variant { Distributor; Viewer; Admin; Manufacturer };
+
 service : {
   create_pharmaceutical : (PharmaceuticalPayload) -> (Result);
   create_reward : (RewardPayload) -> (Result_1);
@@ -73,4 +84,9 @@ service : {
   get_pharmaceutical_history : (nat64) -> (Result_6) query;
   get_user_by_id : (nat64) -> (Result_7) query;
   get_users_by_role : (UserRole) -> (Result_8) query;
+  update_user_role : (nat64, UserRole) -> (Result_3);
+  delete_user : (nat64) -> (Result_3);
+  delete_pharmaceutical : (nat64) -> (Result);
+  delete_supply_chain_event : (nat64) -> (Result_2);
+  delete_reward : (nat64) -> (Result_1);
 }
